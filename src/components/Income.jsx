@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Income( { incomeList, onDelete, onEdit }) {
+export default function Income( { incomeList, onDelete, onEdit,incomeCategory, onSort }) {
     const [isFilter, setIsFilter] = useState(false);
     const [isSorting, setIsSorting] = useState(false);
   return (
@@ -79,6 +79,10 @@ export default function Income( { incomeList, onDelete, onEdit }) {
                     role="menuitem"
                     tabindex="-1"
                     id="menu-item-0"
+                    onClick={() => {
+                      onSort("lh"); 
+                      setIsSorting(prev => !prev); // Use a functional update to get the previous state
+                  }}
                   >
                     Low to High
                   </a>
@@ -88,6 +92,10 @@ export default function Income( { incomeList, onDelete, onEdit }) {
                     role="menuitem"
                     tabindex="-1"
                     id="menu-item-0"
+                    onClick={() => {
+                      onSort("hl"); 
+                      setIsSorting(prev => !prev); // Use a functional update to get the previous state
+                  }}
                   >
                     High to Low
                   </a>
@@ -142,39 +150,19 @@ export default function Income( { incomeList, onDelete, onEdit }) {
                 id="filter-dropdown"
               >
                 <div class="py-1" role="none">
-                        <label class="inline-flex items-center px-4 py-2 text-sm text-gray-700">
+                  {
+                    incomeCategory.map((income) => (
+                      <label key={income} class="inline-flex items-center px-4 py-2 text-sm text-gray-700">
                           <input
                             type="checkbox"
                             class="form-checkbox h-4 w-4 rounded-md text-gray-600"
                             id="filter-option-1"
                           />
-                          <span class="ml-2">Salary</span>
+                          <span class="ml-2">{income}</span>
                         </label>
-                        <label class="inline-flex items-center px-4 py-2 text-sm text-gray-700">
-                          <input
-                            type="checkbox"
-                            class="form-checkbox h-4 w-4 rounded-md text-gray-600"
-                            id="filter-option-2"
-                          />
-                          <span class="ml-2">Outsourcing</span>
-                        </label>
-                        <label class="inline-flex items-center px-4 py-2 text-sm text-gray-700">
-                          <input
-                            type="checkbox"
-                            class="form-checkbox h-4 w-4 rounded-md text-gray-600"
-                            id="filter-option-3"
-                          />
-                          <span class="ml-2">Bond</span>
-                        </label>
-      
-                        <label class="inline-flex items-center px-4 py-2 text-sm text-gray-700">
-                          <input
-                            type="checkbox"
-                            class="form-checkbox h-4 w-4 rounded-md text-gray-600"
-                            id="filter-option-3"
-                          />
-                          <span class="ml-2">Dividend</span>
-                        </label>
+                    ))
+                  }
+                        
                       </div>
                 
               </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Expanse({expanseList, onDelete, onEdit}) {
+export default function Expanse({expanseList, onDelete, onEdit, expanseCategory, onSort}) {
     const [isFilter, setIsFilter] = useState(false);
     const [isSorting, setIsSorting] = useState(false);
   return (
@@ -83,6 +83,10 @@ export default function Expanse({expanseList, onDelete, onEdit}) {
                     role="menuitem"
                     tabindex="-1"
                     id="menu-item-0"
+                    onClick={() => {
+                      onSort("lh"); 
+                      setIsSorting(prev => !prev); // Use a functional update to get the previous state
+                  }}
                   >
                     Low to High
                   </a>
@@ -92,6 +96,10 @@ export default function Expanse({expanseList, onDelete, onEdit}) {
                     role="menuitem"
                     tabindex="-1"
                     id="menu-item-0"
+                    onClick={() => {
+                      onSort("hl"); 
+                      setIsSorting(prev => !prev); // Use a functional update to get the previous state
+                  }}
                   >
                     High to Low
                   </a>
@@ -145,30 +153,22 @@ export default function Expanse({expanseList, onDelete, onEdit}) {
                 id="filter-dropdown2"
               >
                 <div class="py-1" role="none">
-                  <label class="inline-flex items-center px-4 py-2 text-sm text-gray-700">
-                    <input
-                      type="checkbox"
-                      class="form-checkbox h-4 w-4 rounded-md text-gray-600"
-                      id="filter-option-1"
-                    />
-                    <span class="ml-2">Education</span>
-                  </label>
-                  <label class="inline-flex items-center px-4 py-2 text-sm text-gray-700">
-                    <input
-                      type="checkbox"
-                      class="form-checkbox h-4 w-4 rounded-md text-gray-600"
-                      id="filter-option-2"
-                    />
-                    <span class="ml-2">Food</span>
-                  </label>
-                  <label class="inline-flex items-center px-4 py-2 text-sm text-gray-700">
-                    <input
-                      type="checkbox"
-                      class="form-checkbox h-4 w-4 rounded-md text-gray-600"
-                      id="filter-option-3"
-                    />
-                    <span class="ml-2">Health</span>
-                  </label>
+
+                  {
+                    expanseCategory.map(expanse => (
+                    <label key={expanse} class="inline-flex items-center px-4 py-2 text-sm text-gray-700">
+                      <input
+                        type="checkbox"
+                        class="form-checkbox h-4 w-4 rounded-md text-gray-600"
+                        id="filter-option-1"
+                      />
+                      <span class="ml-2">{expanse}</span>
+                    </label>
+                    ))
+                  }
+
+                  
+
                 </div>
               </div>) : ""}
             </div>

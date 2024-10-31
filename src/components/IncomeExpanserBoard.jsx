@@ -14,6 +14,7 @@ export default function IncomeExpanserBoard() {
     const [expanseList, setExpanseList] = useState([]);
     const [updateCost, setUpdateCost] = useState(null);
 
+
     function handleToggle(expanse){
         setIsExpanse(expanse);
         setCategories(expanse ? expanseCategory : incomeCategory);
@@ -73,6 +74,25 @@ export default function IncomeExpanserBoard() {
       setIsExpanse(true);
     }
 
+    function handleIncomeSort(type){
+      if(type == "lh"){
+        const sortedAscending = incomeList.sort((a, b) => a.amount - b.amount);
+        setIncomeList(sortedAscending);
+      }else{
+        const sortedDescending = incomeList.sort((a, b) => b.amount - a.amount);
+        setIncomeList(sortedDescending);
+      }
+    }
+
+    function handleExpanseSort(type){
+      if(type == "lh"){
+        const sortedAscending = expanseList.sort((a, b) => a.amount - b.amount);
+        setExpanseList(sortedAscending);
+      }else{
+        const sortedDescending = expanseList.sort((a, b) => b.amount - a.amount);
+        setExpanseList(sortedDescending);
+      }
+    }
   return (
     <main className="relative mx-auto mt-10 w-full max-w-7xl">
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -82,8 +102,8 @@ export default function IncomeExpanserBoard() {
           <TotalBalance incomeList={incomeList}  expanseList={expanseList}/>
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
-            <Income incomeList={incomeList} onDelete={deleteIncomeData} onEdit={handleEditIncome} />
-            <Expanse expanseList={expanseList} onDelete={deleteExpanseData}  onEdit={handleEditExpanse}/>
+            <Income incomeList={incomeList} onDelete={deleteIncomeData} onEdit={handleEditIncome} incomeCategory={incomeCategory} onSort={handleIncomeSort}/>
+            <Expanse expanseList={expanseList} onDelete={deleteExpanseData}  onEdit={handleEditExpanse} expanseCategory={expanseCategory} onSort={handleExpanseSort}/>
           </div>
         </div>
       </section>
